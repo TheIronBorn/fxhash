@@ -5,6 +5,7 @@ extern crate fxhash;
 extern crate seahash;
 
 use std::hash::{Hash, Hasher};
+use std::mem::size_of_val;
 use test::{Bencher, black_box};
 
 
@@ -26,6 +27,7 @@ macro_rules! generate_benches {
             #[bench]
             fn $fx(b: &mut Bencher) {
                 let s = black_box($s);
+                b.bytes = s.len();
                 b.iter(|| {
                     fxhash::hash(&s)
                 })
@@ -34,6 +36,7 @@ macro_rules! generate_benches {
             #[bench]
             fn $fx32(b: &mut Bencher) {
                 let s = black_box($s);
+                b.bytes = s.len();
                 b.iter(|| {
                     fxhash::hash32(&s)
                 })
@@ -42,6 +45,7 @@ macro_rules! generate_benches {
             #[bench]
             fn $fx64(b: &mut Bencher) {
                 let s = black_box($s);
+                b.bytes = s.len();
                 b.iter(|| {
                     fxhash::hash64(&s)
                 })
@@ -50,6 +54,7 @@ macro_rules! generate_benches {
             #[bench]
             fn $fnv(b: &mut Bencher) {
                 let s = black_box($s);
+                b.bytes = s.len();
                 b.iter(|| {
                     fnvhash(&s)
                 })
@@ -58,6 +63,7 @@ macro_rules! generate_benches {
             #[bench]
             fn $sea(b: &mut Bencher) {
                 let s = black_box($s);
+                b.bytes = s.len();
                 b.iter(|| {
                     seahash(&s)
                 })
